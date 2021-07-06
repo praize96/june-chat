@@ -1,3 +1,4 @@
+/*
 package ru.geekbrains.june.chat.server;
 
 import java.io.DataInputStream;
@@ -121,3 +122,4 @@ public class ClientHandler {  //обработчик клиента
         }
     }
 }
+*/

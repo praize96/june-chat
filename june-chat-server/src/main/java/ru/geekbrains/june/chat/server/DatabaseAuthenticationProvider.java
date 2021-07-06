@@ -1,3 +1,4 @@
+/*
 package ru.geekbrains.june.chat.server;
 
 import java.sql.*;
@@ -109,4 +110,4 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         disconnection();
         return nickname;
     }
-}
+}*/

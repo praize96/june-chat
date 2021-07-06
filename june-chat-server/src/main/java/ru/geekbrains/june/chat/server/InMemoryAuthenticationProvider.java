@@ -1,3 +1,4 @@
+/*
 package ru.geekbrains.june.chat.server;
 
 import java.util.ArrayList;
@@ -36,3 +37,4 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
         return null;
     }
 }
+*/

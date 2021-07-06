@@ -1,3 +1,4 @@
+/*
 package ru.geekbrains.june.chat.client;
 
 import javafx.application.Platform;
@@ -183,4 +184,4 @@ public class Controller {
             messageField.selectEnd();
         }
     }
-}
+}*/

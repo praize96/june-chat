@@ -1,3 +1,4 @@
+/*
 package ru.geekbrains.june.chat.server;
 
 public class ServerApp {
@@ -5,3 +6,4 @@ public class ServerApp {
         new Server();
     } //запуск сервера
 }
+*/
