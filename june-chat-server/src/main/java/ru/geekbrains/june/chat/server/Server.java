@@ -1,4 +1,3 @@
-/*
 package ru.geekbrains.june.chat.server;
 
 import java.io.IOException;
@@ -83,5 +82,4 @@ public class Server {
         sender.sendMessage("Пользователь " + receiverUsername + " не в сети");
     }
 }
-*/
 
