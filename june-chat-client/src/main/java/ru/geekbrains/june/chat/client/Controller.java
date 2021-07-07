@@ -7,10 +7,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
     @FXML
@@ -33,6 +33,8 @@ public class Controller {
     private DataOutputStream out;
     private Stage stage;
     private String nickname = null;
+    private BufferedWriter bufferedWriter;
+    private BufferedReader bufferedReader;
 
     public void setStage(Stage stage) {  //метод setter для установки стэйджа в классе контроллера
         this.stage = stage;
@@ -115,9 +117,30 @@ public class Controller {
                     String myUsername = inputMessage.split("\\s+")[1];
                     nickname = myUsername;
                     setAuthorized(true);
+                    File localChatHistory = new File(nickname + ".txt");
+                    if (!localChatHistory.exists()) {
+                        localChatHistory.createNewFile();
+                    }
+                    bufferedReader = new BufferedReader(new FileReader(localChatHistory));
+                    String str;
+                    List<String> tempList = new ArrayList<>();
+                    while ((str = bufferedReader.readLine()) != null) {
+                        tempList.add(str);
+                    }
+                    if (tempList.size() > 100) {
+                        for (int i = tempList.size() - 100; i >= 0; i--) {
+                            tempList.remove(i);
+                        }
+                    }
+                    for (String temp : tempList){
+                        chatArea.appendText(temp + "\n");
+                    }
+                    bufferedReader.close();
+                    bufferedWriter = new BufferedWriter(new FileWriter(localChatHistory, true));
                     break;
                 }
                 chatArea.appendText(inputMessage + "\n");
+
             }
             while (true) {
                 String inputMessage = in.readUTF();
@@ -137,6 +160,8 @@ public class Controller {
                     }
                     continue;
                 }
+                bufferedWriter.write(inputMessage + "\n");
+                bufferedWriter.flush();
                 chatArea.appendText(inputMessage + "\n");
             }
         } catch (IOException e) {
@@ -148,6 +173,7 @@ public class Controller {
 
     private void closeConnection() {  //закрытие соединения с сервером
         setAuthorized(false);
+        chatArea.clear();
         try {
             if (in != null) {
                 in.close();
@@ -165,6 +191,13 @@ public class Controller {
         try {
             if (socket != null) {
                 socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
