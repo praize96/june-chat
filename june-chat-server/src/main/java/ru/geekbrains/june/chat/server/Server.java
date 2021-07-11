@@ -17,6 +17,7 @@ public class Server {
     public Server() {
         try {
             this.authenticationProvider = new DatabaseAuthenticationProvider();  //переключение на бд
+            authenticationProvider.start();
             this.clients = new ArrayList<>();
             ServerSocket serverSocket = new ServerSocket(8189); //адрес сервера
             System.out.println("Сервер запущен. Ожидаем подключение клиентов..");
@@ -27,6 +28,8 @@ public class Server {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            authenticationProvider.stop();
         }
     }
 
