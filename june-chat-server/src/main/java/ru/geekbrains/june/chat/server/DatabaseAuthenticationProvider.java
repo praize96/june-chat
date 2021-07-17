@@ -1,4 +1,3 @@
-/*
 package ru.geekbrains.june.chat.server;
 
 import java.sql.*;
@@ -19,7 +18,8 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    public static void connection() {
+    @Override
+    public void start() {
         try {
             connect();
             createTable();
@@ -30,7 +30,9 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
             throwables.printStackTrace();
         }
     }
-    public static void disconnection() {
+
+    @Override
+    public void stop() {
         try {
             dropTable();
         } catch (SQLException throwables) {
@@ -105,10 +107,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public String getUsernameByLoginAndPassword(String login, String password) {
-        connection();
         String nickname = readTable(login, password);
-        disconnection();
         return nickname;
     }
 }
-*/

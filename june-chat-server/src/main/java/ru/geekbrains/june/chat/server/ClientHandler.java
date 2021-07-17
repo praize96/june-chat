@@ -1,10 +1,11 @@
-/*
 package ru.geekbrains.june.chat.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientHandler {  //обработчик клиента
     private Server server;
@@ -12,6 +13,7 @@ public class ClientHandler {  //обработчик клиента
     private String username;
     private DataInputStream in;
     private DataOutputStream out;
+    private ExecutorService executorService;
 
     public String getUsername() {
         return username;
@@ -23,7 +25,11 @@ public class ClientHandler {  //обработчик клиента
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-            new Thread(() -> logic()).start();
+            executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(() -> {
+                logic();
+            });
+//            new Thread(() -> logic()).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,6 +126,6 @@ public class ClientHandler {  //обработчик клиента
         } catch (IOException e) {
             e.printStackTrace();
         }
+        executorService.shutdown();
     }
 }
-*/
