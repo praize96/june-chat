@@ -1,8 +1,12 @@
 package ru.geekbrains.june.chat.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 
 public class DatabaseAuthenticationProvider implements AuthenticationProvider {
+    private static final Logger LOGGER = LogManager.getLogger(DatabaseAuthenticationProvider.class);
     private static Statement statement;
     private static Connection connection;
 
@@ -80,6 +84,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
             }
         }catch (SQLException ex) {
             ex.printStackTrace();
+            LOGGER.error(ex.getMessage());
         }
         return null;
     }
@@ -94,6 +99,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
                 statement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                LOGGER.error(throwables.getMessage());
             }
         }
         if (connection != null) {
@@ -101,6 +107,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
                 connection.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                LOGGER.error(throwables.getMessage());
             }
         }
     }

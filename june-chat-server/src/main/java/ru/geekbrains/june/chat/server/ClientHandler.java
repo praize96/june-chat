@@ -1,5 +1,8 @@
 package ru.geekbrains.june.chat.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ClientHandler {  //обработчик клиента
+    private static final Logger LOGGER = LogManager.getLogger(ClientHandler.class);
     private Server server;
     private Socket socket;
     private String username;
@@ -32,6 +36,7 @@ public class ClientHandler {  //обработчик клиента
 //            new Thread(() -> logic()).start();
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error("Ошибка: " + e.getMessage());
         }
     }
 
@@ -40,6 +45,7 @@ public class ClientHandler {  //обработчик клиента
             out.writeUTF(message);
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -49,6 +55,7 @@ public class ClientHandler {  //обработчик клиента
             while (consumeRegularMessage(in.readUTF()));
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         } finally {
             System.out.println("Клиент " + username + " отключился");
             server.unsubscribe(this);
@@ -111,6 +118,7 @@ public class ClientHandler {  //обработчик клиента
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         try {
             if (out != null) {
@@ -118,6 +126,7 @@ public class ClientHandler {  //обработчик клиента
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         try {
             if (socket != null) {
@@ -125,6 +134,7 @@ public class ClientHandler {  //обработчик клиента
             }
         } catch (IOException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         executorService.shutdown();
     }
