@@ -1,4 +1,3 @@
-/*
 package ru.geekbrains.june.chat.client;
 
 import javafx.application.Application;
@@ -24,4 +23,3 @@ public class Main extends Application {  //запуск клиентского �
         launch(args);
     }
 }
-*/
