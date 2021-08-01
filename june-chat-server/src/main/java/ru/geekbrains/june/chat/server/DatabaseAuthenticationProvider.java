@@ -1,9 +1,12 @@
-/*
 package ru.geekbrains.june.chat.server;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class DatabaseAuthenticationProvider implements AuthenticationProvider {
+    private static final Logger LOGGER = LogManager.getLogger(DatabaseAuthenticationProvider.class);
     private static Statement statement;
     private static Connection connection;
 
@@ -19,7 +22,8 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         }
     }
 
-    public static void connection() {
+    @Override
+    public void start() {
         try {
             connect();
             createTable();
@@ -30,7 +34,9 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
             throwables.printStackTrace();
         }
     }
-    public static void disconnection() {
+
+    @Override
+    public void stop() {
         try {
             dropTable();
         } catch (SQLException throwables) {
@@ -78,6 +84,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
             }
         }catch (SQLException ex) {
             ex.printStackTrace();
+            LOGGER.error(ex.getMessage());
         }
         return null;
     }
@@ -92,6 +99,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
                 statement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                LOGGER.error(throwables.getMessage());
             }
         }
         if (connection != null) {
@@ -99,16 +107,14 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
                 connection.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                LOGGER.error(throwables.getMessage());
             }
         }
     }
 
     @Override
     public String getUsernameByLoginAndPassword(String login, String password) {
-        connection();
         String nickname = readTable(login, password);
-        disconnection();
         return nickname;
     }
 }
-*/

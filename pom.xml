@@ -12,6 +12,8 @@
         <module>server</module>
         <module>june-chat-server</module>
         <module>june-chat-client</module>
+        <module>java3-lesson5</module>
+        <module>java3-lesson6</module>
     </modules>
 
     <dependencies>
@@ -19,6 +21,22 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.34.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.0</version>
         </dependency>
     </dependencies>
 
